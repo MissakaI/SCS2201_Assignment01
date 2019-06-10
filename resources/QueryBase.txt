@@ -1,0 +1,11 @@
+>Query description string 1
+CATTCTGACTGCAA
+>Query description string 2
+AAAGAAAGA
+>Query description string 3
+GTAA
+>Query description string 4
+AGAGAGAGAGAGAGAGAGAGAGAGAGAGAG
+>Query description string 5
+AGAGAGATGAGAGATGAGAGAGTAGAGAGAGAG
+>EOF
