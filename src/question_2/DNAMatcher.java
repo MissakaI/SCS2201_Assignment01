@@ -1,6 +1,8 @@
 package question_2;
 
 import java.io.*;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -26,6 +28,7 @@ public class DNAMatcher {
 
         Map<String, Pattern> queries = readQueries(query);
         Map<String, Sequence> sequences = readDNASequences(dnaDB);
+
 
 
         /*for (Pattern value : queries.values()) {
@@ -109,8 +112,16 @@ public class DNAMatcher {
 //    }
 
 
-    private int[] matchStrings(char[] sequence, char[] pattern, int[] pi) {
-        return null;
+    private void matchStrings(Sequence sequence, Collection<Pattern> patterns, int[] pi) {
+//        int piPosition[]=new int[patterns.size()];
+        int j=0;
+
+        for (int i = 0; i < sequence.getSequence().length; i++) {
+            if (sequence.getSequence()[i]==patterns.)
+        }
+        for (int i = 0; i < patterns.size(); i++) {
+
+        }
     }
 
     private class Pattern {
@@ -119,6 +130,7 @@ public class DNAMatcher {
         private char[] pattern;
         private int[] pi;
         private boolean piBuilt = false;
+        private ArrayList<MatchInstance> matches;
 
         public Pattern(String desc) {
             this.desc = desc;
@@ -187,6 +199,32 @@ public class DNAMatcher {
                     }
                 }
                 pi[i] = j;
+            }
+        }
+
+        private class MatchInstance{
+            private Sequence sequence;
+            private int offset;
+
+            public MatchInstance(Sequence sequence, int offset) {
+                this.sequence = sequence;
+                this.offset = offset;
+            }
+
+            public Sequence getSequence() {
+                return sequence;
+            }
+
+            public void setSequence(Sequence sequence) {
+                this.sequence = sequence;
+            }
+
+            public int getOffset() {
+                return offset;
+            }
+
+            public void setOffset(int offset) {
+                this.offset = offset;
             }
         }
 
