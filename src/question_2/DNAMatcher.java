@@ -1,7 +1,6 @@
 package question_2;
 
 import java.io.*;
-import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -24,10 +23,13 @@ public class DNAMatcher {
             System.exit(1);
         }
 
+
         Map<String, Pattern> queries = readQueries(query);
-        for (Pattern value : queries.values()) {
+        Map<String, Sequence> sequences = readDNASequences(dnaDB);
+
+
+        /*for (Pattern value : queries.values()) {
             System.out.println(value.getDesc());
-//            System.out.println(value.getQueryString());
             for (char c : value.getPattern()) {
                 System.out.print(c + " ");
             }
@@ -36,7 +38,19 @@ public class DNAMatcher {
                 System.out.print(i + " ");
             }
             System.out.println();
-        }
+        }*/
+
+        /*for (Sequence value : sequences.values()) {
+            System.out.println(value.getDesc());
+            for (char c : value.getSequence()) {
+                System.out.print(c + " ");
+            }
+            System.out.println();
+        }*/
+
+
+
+
 
     }
 
@@ -63,8 +77,27 @@ public class DNAMatcher {
         return queries;
     }
 
-    private char[] readDNASequence() {
-        return null;
+    private Map<String, Sequence> readDNASequences(FileReader dbFileReader) {
+        BufferedReader dbReader = new BufferedReader(dbFileReader);
+        String s = null;
+        Map<String, Sequence> sequences = new LinkedHashMap<>();
+
+        try {
+            String desc = null;
+            while (!(s = dbReader.readLine()).equals(">EOF")) {
+                if (s.charAt(0) == '>') {
+                    desc = s.substring(1);
+                    sequences.put(desc, new Sequence(desc));
+                } else {
+                    Sequence sequence=sequences.get(desc);
+                    sequence.setSequenceString(sequence.getSequenceString()+s);
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+        }
+        return sequences;
     }
 
     private char[] readPattern() {
@@ -157,5 +190,41 @@ public class DNAMatcher {
             }
         }
 
+    }
+
+    private class Sequence{
+        private String desc;
+        private String sequenceString;
+        private char[] sequence;
+
+        public Sequence(String desc) {
+            this.desc = desc;
+            this.sequenceString="";
+        }
+
+        public String getDesc() {
+            return desc;
+        }
+
+        public void setDesc(String desc) {
+            this.desc = desc;
+        }
+
+        public String getSequenceString() {
+            return sequenceString;
+        }
+
+        public void setSequenceString(String sequenceString) {
+            this.sequenceString = sequenceString;
+            this.sequence=sequenceString.toCharArray();
+        }
+
+        public char[] getSequence() {
+            return sequence;
+        }
+
+        public void setSequence(char[] sequence) {
+            this.sequence = sequence;
+        }
     }
 }
