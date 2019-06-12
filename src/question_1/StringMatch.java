@@ -1,3 +1,5 @@
+package question_1;
+
 import java.util.*;
 import java.util.Scanner;
 
