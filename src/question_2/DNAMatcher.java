@@ -1,10 +1,7 @@
 package question_2;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class DNAMatcher {
     /**
@@ -29,6 +26,10 @@ public class DNAMatcher {
         Map<String, Pattern> queries = readQueries(query);
         Map<String, Sequence> sequences = readDNASequences(dnaDB);
 
+        for (Sequence value : sequences.values()) {
+            matchStrings(value, new ArrayList<>(queries.values()));
+            break;
+        }
 
 
         /*for (Pattern value : queries.values()) {
@@ -50,9 +51,6 @@ public class DNAMatcher {
             }
             System.out.println();
         }*/
-
-
-
 
 
     }
@@ -92,8 +90,8 @@ public class DNAMatcher {
                     desc = s.substring(1);
                     sequences.put(desc, new Sequence(desc));
                 } else {
-                    Sequence sequence=sequences.get(desc);
-                    sequence.setSequenceString(sequence.getSequenceString()+s);
+                    Sequence sequence = sequences.get(desc);
+                    sequence.setSequenceString(sequence.getSequenceString() + s);
                 }
             }
         } catch (IOException e) {
@@ -107,24 +105,51 @@ public class DNAMatcher {
         return null;
     }
 
-//    private char[] detectPrefix(char[] pattern){
-//        return null;
-//    }
 
+    private void matchStrings(Sequence sequence, ArrayList<Pattern> patterns) {
 
-    private void matchStrings(Sequence sequence, Collection<Pattern> patterns, int[] pi) {
-//        int piPosition[]=new int[patterns.size()];
-        int j=0;
-
+        int j[] = new int[patterns.size()];
         for (int i = 0; i < sequence.getSequence().length; i++) {
-            if (sequence.getSequence()[i]==patterns.)
-        }
-        for (int i = 0; i < patterns.size(); i++) {
+//            System.out.println(sequence.getSequence()[i]);
+            Arrays.fill(j, -1);
+            for (int k = 0; k < patterns.size(); k++) {
+                Pattern pattern = patterns.get(k);
+//                System.out.println("fuck 1");
 
+                while (j[k] >= 0 && ((j[k] + 1) == pattern.getPattern().length || sequence.getSequence()[i] != pattern.getPattern()[j[k] + 1])) {
+//                    System.out.println("fuck 2");
+                    if ((j[k] + 1) == pattern.getPattern().length) {
+                        pattern.getMatches().add(pattern.new MatchInstance(sequence, (i - pattern.getPattern().length)));
+                        System.out.println((i - pattern.getPattern().length));
+                    }
+                    j[k] = (pattern.getPi()[j[k]]) - 1;
+                }
+                if (sequence.getSequence()[i] == pattern.getPattern()[j[k] + 1]) {
+//                    System.out.println("Match :" + sequence.getSequence()[i]);
+//                    System.out.println("Pattern :"+pattern.getDesc());
+                    j[k]++;
+                }
+            }
+
+
+//            while (j >= 0 && ((j + 1) == patterns.get(0).getPattern().length || sequence.getSequence()[i] != patterns.get(0).getPattern()[j + 1])) {
+//                if ((j + 1) == patterns.get(0).getPattern().length) {
+//                    patterns.get(0).getMatches().add(patterns.get(0).new MatchInstance(sequence, (i - patterns.get(0).getPattern().length)));
+//                    System.out.println((i - patterns.get(0).getPattern().length));
+//                }
+//                j = (patterns.get(0).getPi()[j]) - 1;
+//            }
+//            if (sequence.getSequence()[i] == patterns.get(0).getPattern()[j + 1]) {
+////                System.out.println("Match :" + sequence.getSequence()[i]);
+//                j++;
+//            }
         }
+//        for (int i = 0; i < patterns.size(); i++) {
+//
+//        }
     }
 
-    private class Pattern {
+    class Pattern {
         private String desc;
         private String queryString;
         private char[] pattern;
@@ -202,7 +227,18 @@ public class DNAMatcher {
             }
         }
 
-        private class MatchInstance{
+        public ArrayList<MatchInstance> getMatches() {
+            if (matches == null) {
+                matches = new ArrayList<>();
+            }
+            return matches;
+        }
+
+        public void setMatches(ArrayList<MatchInstance> matches) {
+            this.matches = matches;
+        }
+
+        public class MatchInstance {
             private Sequence sequence;
             private int offset;
 
@@ -230,14 +266,14 @@ public class DNAMatcher {
 
     }
 
-    private class Sequence{
+    private class Sequence {
         private String desc;
         private String sequenceString;
         private char[] sequence;
 
         public Sequence(String desc) {
             this.desc = desc;
-            this.sequenceString="";
+            this.sequenceString = "";
         }
 
         public String getDesc() {
@@ -254,7 +290,7 @@ public class DNAMatcher {
 
         public void setSequenceString(String sequenceString) {
             this.sequenceString = sequenceString;
-            this.sequence=sequenceString.toCharArray();
+            this.sequence = sequenceString.toCharArray();
         }
 
         public char[] getSequence() {
