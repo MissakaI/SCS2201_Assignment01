@@ -7,20 +7,20 @@ public class DNAMatcher {
     /**
      * Defines the maximum number of characters in a line of DNA Sequence String
      */
-    public static final int LINE_LENGTH = 70;
+//    public static final int LINE_LENGTH = 70;
     private static final String dbName = "SampleDatabase.txt";
     private static final String queryName = "QueryBase.txt";
 
-    public DNAMatcher() {
-        FileReader dnaDB = null, query = null;
+    public DNAMatcher(FileReader dnaDB, FileReader query) {
+//        FileReader dnaDB = null, query = null;
 
-        try {
-            dnaDB = new FileReader(this.getClass().getResource("/" + dbName).getFile());
-            query = new FileReader(this.getClass().getResource("/" + queryName).getFile());
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-            System.exit(1);
-        }
+//        try {
+//            dnaDB = new FileReader(this.getClass().getResource("/" + dbName).getFile());
+//            query = new FileReader(this.getClass().getResource("/" + queryName).getFile());
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//            System.exit(1);
+//        }
 
 
         Map<String, Pattern> queries = readQueries(query);
@@ -28,31 +28,47 @@ public class DNAMatcher {
 
         for (Sequence value : sequences.values()) {
             matchStrings(value, new ArrayList<>(queries.values()));
-            break;
         }
 
 
-        /*for (Pattern value : queries.values()) {
-            System.out.println(value.getDesc());
+
+        System.out.println("Patterns");
+
+        for (Pattern value : queries.values()) {
+            System.out.print(value.getDesc() + ": ");
             for (char c : value.getPattern()) {
                 System.out.print(c + " ");
             }
+//            System.out.println();
+//            for (int i : value.getPi()) {
+//                System.out.print(i + " ");
+//            }
             System.out.println();
-            for (int i : value.getPi()) {
-                System.out.print(i + " ");
-            }
-            System.out.println();
-        }*/
+        }
 
-        /*for (Sequence value : sequences.values()) {
+        System.out.println("\nSequences");
+
+        for (Sequence value : sequences.values()) {
             System.out.println(value.getDesc());
-            for (char c : value.getSequence()) {
-                System.out.print(c + " ");
+            System.out.println(value.getSequenceString());
+
+//            for (char c : value.getSequence()) {
+//                System.out.print(c + " ");
+//            }
+            System.out.println();
+        }
+
+        for (Pattern pattern : queries.values()) {
+            System.out.println(pattern.getDesc());
+            if (pattern.getMatches().size() > 0) {
+                for (Pattern.MatchInstance match : pattern.getMatches()) {
+                    System.out.println(match.getSequence().getDesc() + " at offset " + match.getOffset());
+                }
+            } else {
+                System.out.println("NONE");
             }
             System.out.println();
-        }*/
-
-
+        }
     }
 
     private Map<String, Pattern> readQueries(FileReader queryFileReader) {
@@ -109,9 +125,10 @@ public class DNAMatcher {
     private void matchStrings(Sequence sequence, ArrayList<Pattern> patterns) {
 
         int j[] = new int[patterns.size()];
+        Arrays.fill(j, -1);
         for (int i = 0; i < sequence.getSequence().length; i++) {
 //            System.out.println(sequence.getSequence()[i]);
-            Arrays.fill(j, -1);
+
             for (int k = 0; k < patterns.size(); k++) {
                 Pattern pattern = patterns.get(k);
 //                System.out.println("fuck 1");
@@ -120,7 +137,7 @@ public class DNAMatcher {
 //                    System.out.println("fuck 2");
                     if ((j[k] + 1) == pattern.getPattern().length) {
                         pattern.getMatches().add(pattern.new MatchInstance(sequence, (i - pattern.getPattern().length)));
-                        System.out.println((i - pattern.getPattern().length));
+//                        System.out.println((i - pattern.getPattern().length));
                     }
                     j[k] = (pattern.getPi()[j[k]]) - 1;
                 }
