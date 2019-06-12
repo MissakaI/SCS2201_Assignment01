@@ -1,0 +1,15 @@
+Matched pattern starts at 127 index of text string
+
+Matched pattern starts at 426 index of text string
+
+Matched pattern starts at 574 index of text string
+
+Matched pattern starts at 598 index of text string
+
+Matched pattern starts at 617 index of text string
+
+Matched pattern starts at 621 index of text string
+
+Matched pattern starts at 630 index of text string
+
+Matched pattern starts at 640 index of text string

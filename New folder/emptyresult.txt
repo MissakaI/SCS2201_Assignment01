@@ -1,0 +1,5 @@
+Matched pattern starts at 1 index of text string
+
+Matched pattern starts at 4 index of text string
+
+Matched pattern starts at 6 index of text string
