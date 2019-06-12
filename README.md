@@ -36,3 +36,14 @@ And the method `readDNASequences` reads the DNA DB file and and make instances o
 slightly modified to check matches with several patterns in single iteration of the sequence.
 Thus modifies the complexity of the original algorithm as well. Which is originally O(n) is now in
 order of O(nk) where `k` is the number of queries.
+
+#### Execution of Question 2
+Built using JDK 8 release 181
+
+1. To complile `javac Main.java`
+2. Execute with default files `java Main`
+
+To pass optional input files use
+`java Main <sequenceFile> <queryFile>`
+
+eg: `java Main "DNA Database.txt" QueryBase.txt`

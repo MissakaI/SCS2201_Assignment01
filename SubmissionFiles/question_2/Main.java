@@ -50,5 +50,14 @@ public class Main {
         }
 
         DNAMatcher matcher = new DNAMatcher(dnaDB, query, out);
+
+        out.flush();
+        out.close();
+        try {
+            dnaDB.close();
+            query.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

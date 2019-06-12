@@ -41,6 +41,7 @@ public class DNAMatcher {
             out.println(value.getSequenceString());
             out.println();
         }
+        */
 
         for (Pattern pattern : queries.values()) {
             out.println(pattern.getDesc());
@@ -53,7 +54,6 @@ public class DNAMatcher {
             }
             out.println();
         }
-        */
     }
 
     private Map<String, Pattern> readQueries(FileReader queryFileReader) {
