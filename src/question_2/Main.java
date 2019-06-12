@@ -1,8 +1,6 @@
 package question_2;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+import java.io.*;
 
 public class Main {
     private static final String dbName = "SampleDatabase.txt";
@@ -10,11 +8,10 @@ public class Main {
 
     public static void main(String[] args) {
         FileReader dnaDB = null, query = null;
-//        File f=new File(".");
-//        System.out.println(f.getAbsolutePath());
-        try{
-            dnaDB=new FileReader(args[0]);
-            query=new FileReader(args[1]);
+
+        try {
+            dnaDB = new FileReader(args[0]);
+            query = new FileReader(args[1]);
         } catch (FileNotFoundException | ArrayIndexOutOfBoundsException e) {
 //            e.printStackTrace();
             /**
@@ -28,9 +25,33 @@ public class Main {
                 System.out.println("No Files Found");
                 System.exit(1);
             }
-
         }
 
-        DNAMatcher matcher=new DNAMatcher(dnaDB,query);
+        File outputFile = new File("Output.txt");
+        if (outputFile.exists()) {
+            System.out.println("File with Output name found. Deleting...");
+            if (outputFile.delete()) {
+                System.out.println("Deleted Successfully");
+            } else {
+                System.out.println("Deletion Failed");
+            }
+        }
+        try {
+            System.out.println("Creating new output file.");
+            if (outputFile.createNewFile()) {
+                System.out.println("Created new output file.");
+            }
+        } catch (IOException e) {
+            System.out.println("Output File creation failed");
+        }
+
+        PrintStream out = System.out;
+        try {
+            out = new PrintStream(outputFile);
+        } catch (FileNotFoundException e) {
+            System.exit(1);
+        }
+
+        DNAMatcher matcher = new DNAMatcher(dnaDB, query, out);
     }
 }
