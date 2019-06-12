@@ -127,43 +127,21 @@ public class DNAMatcher {
         int j[] = new int[patterns.size()];
         Arrays.fill(j, -1);
         for (int i = 0; i < sequence.getSequence().length; i++) {
-//            System.out.println(sequence.getSequence()[i]);
 
             for (int k = 0; k < patterns.size(); k++) {
                 Pattern pattern = patterns.get(k);
-//                System.out.println("fuck 1");
 
                 while (j[k] >= 0 && ((j[k] + 1) == pattern.getPattern().length || sequence.getSequence()[i] != pattern.getPattern()[j[k] + 1])) {
-//                    System.out.println("fuck 2");
                     if ((j[k] + 1) == pattern.getPattern().length) {
                         pattern.getMatches().add(pattern.new MatchInstance(sequence, (i - pattern.getPattern().length)));
-//                        System.out.println((i - pattern.getPattern().length));
                     }
                     j[k] = (pattern.getPi()[j[k]]) - 1;
                 }
                 if (sequence.getSequence()[i] == pattern.getPattern()[j[k] + 1]) {
-//                    System.out.println("Match :" + sequence.getSequence()[i]);
-//                    System.out.println("Pattern :"+pattern.getDesc());
                     j[k]++;
                 }
             }
-
-
-//            while (j >= 0 && ((j + 1) == patterns.get(0).getPattern().length || sequence.getSequence()[i] != patterns.get(0).getPattern()[j + 1])) {
-//                if ((j + 1) == patterns.get(0).getPattern().length) {
-//                    patterns.get(0).getMatches().add(patterns.get(0).new MatchInstance(sequence, (i - patterns.get(0).getPattern().length)));
-//                    System.out.println((i - patterns.get(0).getPattern().length));
-//                }
-//                j = (patterns.get(0).getPi()[j]) - 1;
-//            }
-//            if (sequence.getSequence()[i] == patterns.get(0).getPattern()[j + 1]) {
-////                System.out.println("Match :" + sequence.getSequence()[i]);
-//                j++;
-//            }
         }
-//        for (int i = 0; i < patterns.size(); i++) {
-//
-//        }
     }
 
     class Pattern {
