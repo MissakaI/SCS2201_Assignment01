@@ -4,24 +4,8 @@ import java.io.*;
 import java.util.*;
 
 public class DNAMatcher {
-    /**
-     * Defines the maximum number of characters in a line of DNA Sequence String
-     */
-//    public static final int LINE_LENGTH = 70;
-    private static final String dbName = "SampleDatabase.txt";
-    private static final String queryName = "QueryBase.txt";
 
-    public DNAMatcher(FileReader dnaDB, FileReader query) {
-//        FileReader dnaDB = null, query = null;
-
-//        try {
-//            dnaDB = new FileReader(this.getClass().getResource("/" + dbName).getFile());
-//            query = new FileReader(this.getClass().getResource("/" + queryName).getFile());
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//            System.exit(1);
-//        }
-
+    public DNAMatcher(FileReader dnaDB, FileReader query, PrintStream out) {
 
         Map<String, Pattern> queries = readQueries(query);
         Map<String, Sequence> sequences = readDNASequences(dnaDB);
@@ -30,45 +14,46 @@ public class DNAMatcher {
             matchStrings(value, new ArrayList<>(queries.values()));
         }
 
-
-
-        System.out.println("Patterns");
+        /**
+         * Uncomment to see the Patterns read form the file
+         * */
+        /*
+        out.println("Patterns");
 
         for (Pattern value : queries.values()) {
-            System.out.print(value.getDesc() + ": ");
+            out.print(value.getDesc() + ": ");
             for (char c : value.getPattern()) {
-                System.out.print(c + " ");
+                out.print(c + " ");
             }
-//            System.out.println();
-//            for (int i : value.getPi()) {
-//                System.out.print(i + " ");
-//            }
-            System.out.println();
+            out.println();
         }
+        */
 
-        System.out.println("\nSequences");
+
+        /**
+         * Uncomment to see the sequences read from the file
+         * */
+        /*
+        out.println("\nSequences");
 
         for (Sequence value : sequences.values()) {
-            System.out.println(value.getDesc());
-            System.out.println(value.getSequenceString());
-
-//            for (char c : value.getSequence()) {
-//                System.out.print(c + " ");
-//            }
-            System.out.println();
+            out.println(value.getDesc());
+            out.println(value.getSequenceString());
+            out.println();
         }
 
         for (Pattern pattern : queries.values()) {
-            System.out.println(pattern.getDesc());
+            out.println(pattern.getDesc());
             if (pattern.getMatches().size() > 0) {
                 for (Pattern.MatchInstance match : pattern.getMatches()) {
-                    System.out.println(match.getSequence().getDesc() + " at offset " + match.getOffset());
+                    out.println(match.getSequence().getDesc() + " at offset " + match.getOffset());
                 }
             } else {
-                System.out.println("NONE");
+                out.println("NONE");
             }
-            System.out.println();
+            out.println();
         }
+        */
     }
 
     private Map<String, Pattern> readQueries(FileReader queryFileReader) {
