@@ -1,7 +1,8 @@
 # SCS2201_Assignment01
 String Matching Algorithms
 ****
-##Question 1
+## Question 1
+
 The algorithm for the "Question one"  we used is the naive algorithm. 
 The given solution is taking keyboard inputs of both the pattern and the text.
 
@@ -20,7 +21,8 @@ The outer loop will keep a count on how many matching patterns are there.
 If count is zero it will display "No match found" 
 If count there is at least matching pattern program will display the index of the text which matches the pattern
 
-##Question 2
+## Question 2
+
 The DNAMatcher class is contains all the algorithm for the second question.
 To execute it excute the Main class.
 
